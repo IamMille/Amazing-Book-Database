@@ -1,0 +1,63 @@
+.container ul {
+  padding-left: 20px;
+}
+thead tr th:nth-child(1) {
+  text-align: center;
+  width: 48px;
+}
+thead tr:nth-child(2) th:nth-child(1) {
+  vertical-align: middle;
+}
+
+tbody tr td {
+  max-width: 50px;
+}
+
+tbody tr td:nth-child(1) {
+  cursor: help;
+}
+tbody tr td:nth-child(4) {
+  text-align: center;
+}
+tbody tr td:nth-child(4) span {
+  display: none;
+}
+tbody tr:hover td:nth-child(4) span {
+  display: inline;
+}
+tbody tr td:nth-child(4) span.glyphicon-pencil:hover,
+tbody tr td:nth-child(4) span.glyphicon-trash:hover {
+  cursor: pointer;
+}
+
+tbody td.focus {
+  border-color: #9ecaed;
+  box-shadow: 0 0 10px #9ecaed;
+}
+
+tbody tr.inactive {
+  color: red;
+}
+tbody tr.inactive td:nth-child(4) span:nth-child(1) {
+  display: none;
+}
+/********************* LOADING **********************/
+
+thead tr#loading th {
+  text-align: center;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}

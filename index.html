@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Amazing Book Database</title>
+
+	<!-- Bootstrap core CSS -->
+	 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	 <!-- Bootstrap theme -->
+	 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+	 <link href="alertify/alertify.css" id="alertifyCSS" rel="stylesheet">
+
+	 <link rel="stylesheet" type="text/css" href="index.css">
+
+</head>
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Amazing Book Database</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+
+					<li>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							Tools<b class="caret"></b></a>
+
+	            <ul class="dropdown-menu multi-level">
+
+								<li>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Add books from API</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li class="dropdown-submenu">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Set fetch delay</a>
+							 </li>
+
+							 <li>
+								 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								 Try random API key</a>
+							 </li>
+
+							</ul>
+					</li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+	<div class="container" role="main" style="max-width: 700px;">
+
+		<br /><br /> <br />
+
+		<h1>Books</h1>
+		<ul>
+			<li>Books and Book lists are restored from cache on visit.</li>
+			<li>Added 1400 ms delay to AJAX calls for testing purposes.</li>
+			<li>onBlur only triggers if editbox is dirty</li>
+			<li>onEdit triggers first after user stops writing</li>
+		</ul>
+		<hr />
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="input-group">
+					<select tabindex="1" id="pickedList" class="form-control" style="width:150px">
+						<optgroup label="Choose list"></optgroup>
+						<optgroup label="───────"></optgroup>
+						<option value="random" hidden>Random API key</option>
+						<option>Create new</option>
+					</select>
+					<button class="btn btn-default" type="button" style="margin-left:7px">Update</button>
+				</div>
+			</div>
+		</div>
+
+		<br />
+
+		<div class="row">
+			<div class="col-xs-12">
+
+				<table class="table table-striped glyphicon-hover">
+	        <thead>
+	          <tr>
+	            <th>#</th>
+	            <th>Book</th>
+	            <th>Author</th>
+	            <th>Action</th>
+	          </tr>
+
+						<tr>
+							<th>
+								<span class="glyphicon glyphicon-shopping-cart"></span>
+							</th>
+							<th>
+								<input tabindex="2" class="form-control" type="text" name="book" id="title" title="Enter a book title" placeholder="Title">
+							</th>
+							<th>
+								<input tabindex="3" class="form-control" type="text" name="author" id="author" title="Enter authors name" placeholder="Author">
+							</th>
+							<th>
+								<button tabindex="4" id="addBook" style="width:100%" class="btn btn-default" type="button">Add</button>
+							</th>
+						</tr>
+
+						<tr id="loading">
+							<th colspan="4">
+								<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+								Loading...
+							</th>
+						</tr>
+
+	        </thead>
+
+	        <tbody id="books">
+	        </tbody>
+
+	      </table>
+
+	    </div> <!-- end of table cols -->
+		</div> <!-- end of row container table -->
+
+	</div> <!-- end of container -->
+
+	<script src="brute.js"></script>
+	<script src="bruteWorker.js"></script>
+	<script src="book.js"></script>
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="alertify/alertify.js"></script>
+</body>
+</html>
