@@ -65,6 +65,7 @@ class App
     this.cfg = JSON.parse(sessionStorage.getItem("settings")) || this.cfg;
     if (this.cfg.userLists) $("#pickedList").innerHTML = this.cfg.userLists;
     if (this.cfg.userBooks) $("#books").innerHTML = this.cfg.userBooks;
+    if (!getPickedList("value")) $table.disableAdd();
     alertify.log("Session restored.");
   }
   saveSettings()
@@ -116,11 +117,13 @@ function changePickedList()
   var txt = el.options[el.selectedIndex].innerText;
 
   if (txt == "Choose list")
-    return;
+    $table.disableAdd();
   if (txt == "Create new")
     createList();
   else
     getAllBooks();
+
+  $table.enableAdd();
 }
 function createList()
 {
