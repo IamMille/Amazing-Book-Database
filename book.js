@@ -30,13 +30,13 @@ class Table {
   isLoading(isTrue) {
     if (isTrue) {
       $("#loading").style.display = "table-row";
-      //$table.disableAdd();
-      //$table.disableLists();
+      $table.disableAdd();
+      $table.disableLists();
     }
     else {
       $("#loading").style.display = "none";
-      //$table.enableAdd();
-      //$table.enableLists();
+      $table.enableAdd();
+      $table.enableLists();
     }
   }
   getBookFromRow(tr) {
@@ -115,6 +115,8 @@ function changePickedList()
   var el = document.getElementById("pickedList");
   var txt = el.options[el.selectedIndex].innerText;
 
+  if (txt == "Choose list")
+    return;
   if (txt == "Create new")
     createList();
   else
@@ -248,6 +250,9 @@ function navClick()
 
 function getAllBooks() // ok
 {
+  if (!getPickedList("value")) {
+    console.log("getAllBooks(): pickedList has no value."); return; }
+
   $table.clear();
   $table.isLoading(true);
   //$table.disableLists();
@@ -424,7 +429,7 @@ function datetime() {
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-function getPickedList(prop) { // value, innerText, etc
+function getPickedList(prop="value") { // value, innerText, etc
 
   var el = document.getElementById("pickedList");
   var val = el.options[el.selectedIndex].value;
@@ -432,7 +437,7 @@ function getPickedList(prop) { // value, innerText, etc
   if (prop == "elm")
     return el.options[el.selectedIndex];
   if (val != "random")
-    return el.options[el.selectedIndex][prop] || "";
+    return el.options[el.selectedIndex].getAttribute(prop) || "";
 
   return genApiKey();
 }
