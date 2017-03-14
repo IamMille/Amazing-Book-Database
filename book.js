@@ -30,13 +30,13 @@ class Table {
   isLoading(isTrue) {
     if (isTrue) {
       $("#loading").style.display = "table-row";
-      $table.disableAdd();
-      $table.disableLists();
+      //$table.disableAdd();
+      //$table.disableLists();
     }
     else {
       $("#loading").style.display = "none";
-      $table.enableAdd();
-      $table.enableLists();
+      //$table.enableAdd();
+      //$table.enableLists();
     }
   }
   getBookFromRow(tr) {
@@ -65,6 +65,7 @@ class App
     this.cfg = JSON.parse(sessionStorage.getItem("settings")) || this.cfg;
     if (this.cfg.userLists) $("#pickedList").innerHTML = this.cfg.userLists;
     if (this.cfg.userBooks) $("#books").innerHTML = this.cfg.userBooks;
+    console.log("loadSettings", getPickedList("value"));
     if (!getPickedList("value")) $table.disableAdd();
     alertify.log("Session restored.");
   }
@@ -91,7 +92,7 @@ window.addEventListener("load", () =>
 
   alertify.logPosition("bottom right");
   alertify.maxLogItems(2);
-  
+
   $app.loadSettings();
 
   $("tbody tr").forEach( tr => {
@@ -290,13 +291,13 @@ function getAllBooks() // ok
 
   $table.clear();
   $table.isLoading(true);
-  //$table.disableLists();
+  $table.disableLists();
 
   apiFetch({
       op: "select"
     }, (api) => {
       $table.isLoading(false);
-      //$table.enableLists();
+      $table.enableLists();
 
       if (api.data && api.data.length > 0)
         api.data.forEach(book => createBook(book));
@@ -450,7 +451,7 @@ function importBooks()
     if (isNaN(input) || !(Number(input) > 0 && Number(input) < 8)) {
       alert("Input must be a number between 1-7."); return; }
 
-    var url = "http://www.librarything.com/api_getdata.php?userid=cctesttc1&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
+    var url = "https://www.librarything.com/api_getdata.php?userid=cctesttc1&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
 
     fetch(url)
       .then(resp => resp.json())
