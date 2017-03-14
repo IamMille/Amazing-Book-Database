@@ -89,6 +89,9 @@ window.addEventListener("load", () =>
 {
   $.noConflict(); // disabe bootstraps jQuery
 
+  alertify.logPosition("bottom right");
+  alertify.maxLogItems(2);
+  
   $app.loadSettings();
 
   $("tbody tr").forEach( tr => {
@@ -111,8 +114,6 @@ window.addEventListener("load", () =>
   $("input")
     .forEach( el => el.addEventListener("keydown", onInputValidate) );
 
-  alertify.logPosition("bottom right");
-  alertify.maxLogItems(2);
   window.addEventListener("online",  onInternet);
   window.addEventListener("offline", onInternet);
 
