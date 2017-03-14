@@ -89,6 +89,19 @@ window.addEventListener("load", () =>
 {
   $.noConflict(); // disabe bootstraps jQuery
 
+  $app.loadSettings();
+
+  $("tbody tr").forEach( tr => {
+    tr.querySelectorAll("span").forEach(
+      el => el.addEventListener("click", btnClick));
+
+    tr.querySelectorAll("td[contenteditable=true]").forEach( el => {
+      el.addEventListener("keydown", onInputValidate);
+      el.addEventListener("keyup", onInputSave);
+      el.addEventListener("focusout", (e) => { onInputSave(e,123); }); // TODO: bind? david
+    });
+  });
+
   $("#pickedList")
     .addEventListener("change", changePickedList);
   $("button")
@@ -104,11 +117,9 @@ window.addEventListener("load", () =>
   window.addEventListener("offline", onInternet);
 
   $table.isLoading(false);
-  $app.loadSettings();
   onInternet();
 
-  if (navigator.onLine)
-    setTimeout( getAllBooks, 2000);
+  //if (navigator.onLine) setTimeout( getAllBooks, 2000);
 });
 
 function changePickedList()
@@ -122,11 +133,11 @@ function changePickedList()
     createList();
   else
     getAllBooks();
-
-  $table.enableAdd();
 }
 function createList()
 {
+  $("option")[0].selected = true;
+
   alertify.prompt("Enter a name for your new list", (input, e) =>
   { // okButton
     e.preventDefault();
@@ -156,6 +167,7 @@ function createList()
       });
     }, (e) => { // cancelButton
       event.preventDefault();
+      $table.disableAdd();
   });
 }
 function onInternet(e)
@@ -231,7 +243,7 @@ function btnClick()
   console.log(btn, this);
 
   switch (btn) {
-    case "Add": addBook(this); break;
+    case "Add": addBook(); break;
     case "Edit": editBook(this); break;
     case "Delete": deleteBook(this); break;
     case "Update": getAllBooks(); break;
@@ -242,7 +254,9 @@ function navClick()
 {
   var btn = this.innerText;
   switch (btn) {
-    case "Add books from API": alert("Add books from API (not yet implemented)"); break;
+    case "Add books from API":
+      importBooks();
+      break;
     case "Set fetch delay": alert("Set fetch delay (not yet implemented)"); break;
     case "Try random API key":
       $("option[value='random']")[0].selected = true;
@@ -307,29 +321,29 @@ function createBook(obj)
   return tr;
 }
 
-function addBook()
+function addBook(title, author)
 {
-  if (!($("#title").value.length > 0 ||
-        $("#author").value.length > 0)) {
-        alert("Both book name and author need to have a value.");
-        return; }
+  if (!title) title = $("#title").value;
+  if (!author) author = $("#author").value;
+
+  if (!(title.length > 0 || author.length > 0)) {
+    alert("Both book name and author need to have a value."); return; }
 
   $table.disableAdd();
 
   var tr = createBook({
     id: "",
-    author: $("#author").value,
-    title: $("#title").value,
+    author: author,
+    title: title,
     updated: "~" + datetime(), // preliminary
     inactive: true
   });
-
-  console.log(tr);
+  //console.log(tr);
 
   apiFetch({
       op: "insert",
-      title: $("#title").value,
-      author: $("#author").value
+      title: title,
+      author: author
     }, (data) => {
       tr.querySelector("td").innerText = data.id;
       tr.querySelector("td").setAttribute( "title", datetime() );
@@ -409,6 +423,40 @@ function onInputSave(e, timeout=1600) //ok
 
 }
 
+function importBooks()
+{
+  alertify.prompt("Enter the number of books you want to import (1-7)", (input, e) =>
+  { // okButton
+    e.preventDefault();
+
+    if (isNaN(input) || !(Number(input) > 0 && Number(input) < 8)) {
+      alert("Input must be a number between 1-7."); return; }
+
+    var url = "http://www.librarything.com/api_getdata.php?userid=cctesttc1&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
+
+    fetch(url)
+      .then(resp => resp.json())
+      .then(data => {
+
+        if (!Object.keys(data.books).length) {
+          console.warn("importBooks(): No books from API?"); return; }
+
+        for (var prop in data.books) {
+          var book = data.books[prop];
+          console.log("Book:", book.title, book.author_fl);
+          var tr = addBook(book.title, book.author_fl);
+        }
+
+      })
+      .catch(error => {
+          console.error("importBooks() error:", error);
+    }); // fetch end
+
+  }, (e) => { // cancelButton
+    e.preventDefault();
+  });
+}
+
 // .alert-success, .alert-info, .alert-warning or .alert-danger
 function msg(str, timeout=850) // not used
 {
@@ -449,8 +497,6 @@ function genApiKey(length=5, current='') {
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz"
         .charAt( Math.floor( Math.random() * 60 ) ) + current );
 }
-//http://www.librarything.com/api_getdata.php?userid=timspalding&showstructure=1&max=10&showCollections=0&showTags=1&booksort=random&responseType=json
-//http://www.librarything.com/api_getdata.php?userid=cctesttc1&showstructure=1&max=3&showCollections=0&showTags=1&booksort=random&responseType=json
 
 HTMLElement.prototype.prepend = function(el) {
     if (this.firstChild) this.insertBefore(el, this.firstChild);
