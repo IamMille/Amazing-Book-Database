@@ -1,6 +1,7 @@
 .container ul {
   padding-left: 20px;
 }
+
 thead tr th:nth-child(1) {
   text-align: center;
   width: 48px;
