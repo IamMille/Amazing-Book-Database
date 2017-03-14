@@ -170,6 +170,7 @@ function createList()
       $table.disableAdd();
   });
 }
+
 function onInternet(e)
 {
   if (navigator.onLine && e) { // only if triggered by event
@@ -204,7 +205,7 @@ function apiFetch(options, callback, retry=8)
   if ($app.fetchDelay() > 0)
     alertify.log("Sending API request.");
 
-  sleep(1400).then( () => {
+  sleep( $app.fetchDelay() ).then( () => {
 
     fetch(url)
       .then(resp => resp.json())
@@ -257,14 +258,30 @@ function navClick()
     case "Add books from API":
       importBooks();
       break;
-    case "Set fetch delay": alert("Set fetch delay (not yet implemented)"); break;
+    case "Set fetch delay":
+      applyDelay();
+      break;
     case "Try random API key":
       $("option[value='random']")[0].selected = true;
       getAllBooks();
       break;
   }
 }
+function applyDelay() {
+  alertify.prompt("Enter new delay before fetch, in miliseconds (0-5000)",
+    (input, e) => { // okButton
+      e.preventDefault();
+      if (isNaN(input) || !(Number(input) >= 0 && Number(input) <= 5000)) {
+        alert("Input must be a number between 0-5000."); return; }
 
+      $app.fetchDelay(input);
+      $app.saveSettings();
+      alertify.success("New delay is: " + input + " ms");
+
+    }, (e) => {
+      e.preventDefault();
+    });
+}
 function getAllBooks() // ok
 {
   if (!getPickedList("value")) {
