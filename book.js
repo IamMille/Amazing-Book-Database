@@ -462,7 +462,7 @@ function importBooks()
 
     var myInit = { method: 'GET',
                    headers: myHeaders,
-                   mode: 'no-cors',
+                   mode: 'cors',
                    cache: 'default' };
 
     fetch(url, myInit)
