@@ -463,8 +463,8 @@ function importBooks()
     });
 
     var myInit = { method: 'GET',
-                   headers: myHeaders,
-                   mode: 'cors',
+                   //headers: myHeaders,
+                   mode: 'no-cors',
                    cache: 'default' };
 
     fetch(url, myInit)
