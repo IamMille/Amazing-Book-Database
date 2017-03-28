@@ -457,7 +457,7 @@ function importBooks()
 
     var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
     //userid=timspalding&key=4200869464
-    
+
     var myHeaders = new Headers();
     var myInit = { method: 'GET',
                    headers: myHeaders,
@@ -465,9 +465,10 @@ function importBooks()
                    cache: 'default' };
 
     fetch(url, myInit)
-      .then(resp => resp.json())
+      .then(resp => resp.text())
       .then(data => {
-
+        console.log(data);
+        return;
         if (!Object.keys(data.books).length) {
           console.warn("importBooks(): No books from API?"); return; }
 
