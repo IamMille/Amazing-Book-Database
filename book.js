@@ -455,8 +455,6 @@ function importBooks()
     if (isNaN(input) || !(Number(input) > 0 && Number(input) < 8)) {
       alert("Input must be a number between 1-7."); return; }
 
-    //var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
-
     var prepositions = ["of", "to", "in", "for", "on", "with"].sort(function() {return 0.5 - Math.random();});
     var url = "https://www.googleapis.com/books/v1/volumes?q=" + prepositions[0];
 
