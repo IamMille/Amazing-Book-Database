@@ -458,8 +458,13 @@ function importBooks()
     //var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
     //userid=timspalding&key=4200869464
     var url = "https://www.librarything.com/api_getdata.php?userid=timspalding&key=4200869464&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
-
-    fetch(url)
+    var myHeaders = new Headers();
+    var myInit = { method: 'GET',
+                   headers: myHeaders,
+                   mode: 'cors',
+                   cache: 'default' };
+                   
+    fetch(url, myInit)
       .then(resp => resp.json())
       .then(data => {
 
