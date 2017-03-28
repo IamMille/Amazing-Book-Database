@@ -55,7 +55,7 @@ class App
 {
   constructor() {
     this.cfg = {
-      fetchDelay: 1,
+      fetchDelay: 1400,
       userLists: null,
       userBooks: null
     };
