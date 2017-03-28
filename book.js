@@ -131,7 +131,7 @@ function changePickedList()
 
   if (txt == "Choose list")
     $table.disableAdd();
-  if (txt == "Create new")
+  else if (txt == "Create new")
     createList();
   else
     getAllBooks();
@@ -164,6 +164,8 @@ function createList()
 
         $table.clear();
         $table.isLoading(false);
+        $table.enableLists();
+        $table.enableAdd();
         $app.saveSettings();
         //getAllBooks();
       });
