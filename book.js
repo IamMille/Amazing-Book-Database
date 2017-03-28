@@ -458,12 +458,10 @@ function importBooks()
     //var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
     //userid=timspalding&key=4200869464
     var url = "https://www.librarything.com/api_getdata.php?userid=timspalding&key=4200869464&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
-    var myHeaders = new Headers({
-      'Access-Control-Allow-Origin': '*'
-    });
+    var myHeaders = new Headers();
 
     var myInit = { method: 'GET',
-                   //headers: myHeaders,
+                   headers: myHeaders,
                    mode: 'no-cors',
                    cache: 'default' };
 
