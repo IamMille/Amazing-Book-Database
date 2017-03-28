@@ -462,13 +462,14 @@ function importBooks()
     var myInit = { method: 'GET',
                    headers: myHeaders,
                    mode: 'no-cors',
-                   cache: 'default' };
+                   cache: 'reload' };
 
     fetch(url, myInit)
       .then(resp => resp.text())
       .then(data => {
         console.log(data);
-        return;
+        if (true) return;
+        
         if (!Object.keys(data.books).length) {
           console.warn("importBooks(): No books from API?"); return; }
 
