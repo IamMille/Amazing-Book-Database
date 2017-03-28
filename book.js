@@ -455,14 +455,13 @@ function importBooks()
     if (isNaN(input) || !(Number(input) > 0 && Number(input) < 8)) {
       alert("Input must be a number between 1-7."); return; }
 
-    //var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
+    var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
     //userid=timspalding&key=4200869464
-    var url = "https://www.librarything.com/api_getdata.php?userid=timspalding&key=4200869464&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
+    
     var myHeaders = new Headers();
-
     var myInit = { method: 'GET',
                    headers: myHeaders,
-                   mode: 'cors',
+                   mode: 'no-cors',
                    cache: 'default' };
 
     fetch(url, myInit)
