@@ -461,7 +461,7 @@ function importBooks()
     var myHeaders = new Headers();
     var myInit = { method: 'GET',
                    headers: myHeaders,
-                   mode: 'no-cors',
+                   mode: 'cors',
                    cache: 'reload' };
 
     fetch(url, myInit)
@@ -469,7 +469,7 @@ function importBooks()
       .then(data => {
         console.log(data);
         if (true) return;
-        
+
         if (!Object.keys(data.books).length) {
           console.warn("importBooks(): No books from API?"); return; }
 
