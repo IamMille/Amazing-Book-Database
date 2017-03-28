@@ -455,28 +455,23 @@ function importBooks()
     if (isNaN(input) || !(Number(input) > 0 && Number(input) < 8)) {
       alert("Input must be a number between 1-7."); return; }
 
-    var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
-    //userid=timspalding&key=4200869464
+    //var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
 
-    var myHeaders = new Headers();
-    var myInit = { method: 'GET',
-                   headers: myHeaders,
-                   mode: 'cors',
-                   cache: 'reload' };
+    var prepositions = ["of", "to", "in", "for", "on", "with"].sort(function() {return 0.5 - Math.random();});
+    var url = "https://www.googleapis.com/books/v1/volumes?q=" + prepositions[0];
 
-    fetch(url, myInit)
-      .then(resp => resp.text())
+    fetch(url)
+      .then(resp => resp.json())
       .then(data => {
         console.log(data);
-        if (true) return;
-
-        if (!Object.keys(data.books).length) {
+        if (!Object.keys(data.items).length) {
           console.warn("importBooks(): No books from API?"); return; }
 
-        for (var prop in data.books) {
-          var book = data.books[prop];
-          console.log("Book:", book.title, book.author_fl);
-          var tr = addBook(book.title, book.author_fl);
+        for(var item in data.items) {
+          if (item >= input) break;
+          var book = data.items[item];
+          console.log("Book:", book.volumeInfo.title, book.volumeInfo.authors[0]);
+          var tr = addBook(book.volumeInfo.title, book.volumeInfo.authors[0]);
         }
 
       })
