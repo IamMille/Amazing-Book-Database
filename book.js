@@ -129,8 +129,10 @@ function changePickedList()
   var el = document.getElementById("pickedList");
   var txt = el.options[el.selectedIndex].innerText;
 
-  if (txt == "Choose list")
+  if (txt == "Choose list") {
     $table.disableAdd();
+    $table.clear();
+  }
   else if (txt == "Create new")
     createList();
   else
@@ -453,7 +455,7 @@ function importBooks()
     if (isNaN(input) || !(Number(input) > 0 && Number(input) < 8)) {
       alert("Input must be a number between 1-7."); return; }
 
-    var url = "https://www.librarything.com/api_getdata.php?userid=cctesttc1&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
+    var url = "https://www.librarything.com/api_getdata.php?userid=Mille123&key=338900847&showstructure=1&showCollections=0&showTags=1&booksort=random&responseType=json&max=" + input;
 
     fetch(url)
       .then(resp => resp.json())
